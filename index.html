@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      Panel Jasteb - Rend
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&amp;family=Orbitron:wght@700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+      :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg-body: #020205;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --neon-glow: 0 0 30px rgba(0, 242, 255, 0.6);
+        }
+
+        [data-theme=&#34;light&#34;] {
+            --primary: #0066ff;
+            --secondary: #ff007a;
+            --bg-body: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #121212;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --neon-glow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        body {
+            font-family: &#39;Plus Jakarta Sans&#39;, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%; height: 100%;
+            z-index: 1; top: 0; left: 0;
+            pointer-events: none;
+        }
+
+        .logo-img {
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            box-shadow: var(--neon-glow);
+            animation: ultra-pulse 3s infinite ease-in-out;
+            padding: 8px;
+            background: var(--bg-body);
+            will-change: transform, box-shadow;
+        }
+
+        @keyframes ultra-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px var(--primary); }
+        }
+
+        .theme-control { position: fixed; top: 30px; right: 30px; z-index: 1000; }
+        .music-control { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
+
+        .control-btn {
+            height: 55px; border-radius: 15px;
+            background: var(--card-bg); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; padding: 0 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .control-btn:hover { 
+            transform: translateY(-3px); 
+            background: var(--primary); 
+            color: #000; 
+            box-shadow: var(--neon-glow);
+        }
+
+        .glass-card {
+            background: var(--card-bg); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color); border-radius: 30px;
+            padding: 35px; margin-bottom: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-family: &#39;Orbitron&#39;, sans-serif; font-weight: 900; letter-spacing: 8px;
+            background: linear-gradient(90deg, #fff, var(--primary), var(--secondary), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+
+        .form-control {
+            background: rgba(0, 0, 0, 0.2) !important;
+            border: 1px solid var(--border-color); color: var(--text-main) !important;
+            border-radius: 12px; padding: 12px 18px; height: auto;
+        }
+
+        .btn-modern {
+            border-radius: 12px; padding: 14px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px; border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-glow-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #000;
+        }
+
+        .badge-limit {
+            background: var(--primary); color: #000;
+            padding: 4px 10px; border-radius: 8px; font-weight: 800;
+        }
+
+        /* Custom Swal Styling untuk mencocokkan tema */
+        .swal2-popup-custom {
+            background: var(--bg-body) !important;
+            color: var(--text-main) !important;
+            border: 1px solid var(--primary) !important;
+            border-radius: 20px !important;
+            backdrop-filter: blur(20px) !important;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="particles-js">
+    </div>
+    <audio id="bgAudio" loop="" preload="none">
+      <source src="https://files.catbox.moe/4ixqfi.mp3" type="audio/mpeg" />
+    </audio>
+    <div class="theme-control">
+      <div class="control-btn" onclick="toggleTheme()">
+        <i class="fas fa-moon mr-2" id="themeIcon"></i>
+        <span class="small font-weight-bold" id="themeText">        DARK MODE
+</span>
+      </div>
+    </div>
+    <div class="music-control">
+      <div class="control-btn" onclick="togglePlay()" style="min-width: 180px; justify-content: space-between;">
+        <span class="small font-weight-bold" id="musicStatus">        PLAY MUSIC
+</span>
+        <i class="fas fa-play" id="playIcon"></i>
+      </div>
+    </div>
+    <div class="container animate__animated animate__fadeIn" style="position: relative; z-index: 10; padding: 60px 20px;">
+      <header class="text-center mb-5">
+        <div class="logo-wrapper">
+          <img src="https://files.catbox.moe/ef30ld.jpg" class="logo-img" alt="Logo" />
+        </div>
+        <h1 class="main-title mt-4">
+          REND NESIA
+        </h1>
+        <p class="opacity-50" style="letter-spacing: 10px; font-size: 0.75rem; font-weight: 800;">
+          RESULT GACOR BY REND NESIA
+        </p>
+      </header>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="glass-card animate__animated animate__fadeInLeft">
+            <h6 class="mb-4 text-primary font-weight-bold">
+              <i class="fas fa-id-card mr-2"></i>
+              DATA RESULT
+            </h6>
+            <div class="form-group">
+              <label class="small opacity-50 font-weight-bold">
+                NAMA RESULT
+              </label>
+              <input type="text" id="namaResult" class="form-control" value="Web DunzZx Design 🚀🔥" />
+            </div>
+            <div class="form-group">
+              <label class="small opacity-50 font-weight-bold">
+                SENDER MURNI
+              </label>
+              <input type="text" id="panelMurni" class="form-control" value="admin@rendhost" readonly="" style="opacity: 0.5;" />
+            </div>
+            <button id="gantiButton" class="btn btn-block btn-modern btn-glow-primary mt-4">
+              GANTI DATA RESULT
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="glass-card animate__animated animate__fadeInRight">
+            <h6 class="mb-4 text-warning font-weight-bold">
+              <i class="fas fa-envelope mr-2"></i>
+              DATA EMAIL
+            </h6>
+            <div class="form-group">
+              <label class="small opacity-50 font-weight-bold">
+                EMAIL TARGET
+              </label>
+              <input type="email" id="email" class="form-control" placeholder="hyugaunchek@gmail" />
+            </div>
+            <div class="form-group">
+              <label class="small opacity-50 font-weight-bold">
+                RESULT JASTEB
+              </label>
+              <input type="number" id="jumlahResult" class="form-control" value="1" />
+            </div>
+            <button id="addEmailButton" class="btn btn-block btn-modern mt-4" style="background: var(--text-main); color: var(--bg-body);">
+              ADD NEW EMAIL
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card animate__animated animate__fadeInUp">
+        <h6 class="text-center mb-4 font-weight-bold" style="letter-spacing: 8px; color: var(--secondary);">
+          DAFTAR EMAIL AKTIF
+        </h6>
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <thead>
+              <tr class="text-primary small">
+                <th class="py-3">
+                  EMAIL
+                </th>
+                <th class="text-center py-3">
+                  LIMIT
+                </th>
+                <th class="text-center py-3">
+                  ACTION
+                </th>
+              </tr>
+            </thead>
+            <tbody id="emailData">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
+    </script>
+    <script>
+      // --- PARTICLE ENGINE DENGAN GLOW ---
+    function updateParticles(color) {
+        particlesJS(&#39;particles-js&#39;, {
+            &#34;particles&#34;: {
+                &#34;number&#34;: { &#34;value&#34;: 110, &#34;density&#34;: { &#34;enable&#34;: true, &#34;value_area&#34;: 800 } },
+                &#34;color&#34;: { &#34;value&#34;: color },
+                &#34;shape&#34;: { &#34;type&#34;: &#34;circle&#34; },
+                &#34;opacity&#34;: { 
+                    &#34;value&#34;: 0.9, 
+                    &#34;anim&#34;: { &#34;enable&#34;: true, &#34;speed&#34;: 1, &#34;opacity_min&#34;: 0.5, &#34;sync&#34;: false }
+                },
+                &#34;size&#34;: { &#34;value&#34;: 4.5, &#34;random&#34;: true },
+                &#34;line_linked&#34;: { 
+                    &#34;enable&#34;: true, 
+                    &#34;distance&#34;: 150, 
+                    &#34;color&#34;: color, 
+                    &#34;opacity&#34;: 0.6, 
+                    &#34;width&#34;: 1.8 
+                },
+                &#34;move&#34;: { &#34;enable&#34;: true, &#34;speed&#34;: 4.5, &#34;direction&#34;: &#34;none&#34;, &#34;random&#34;: true, &#34;out_mode&#34;: &#34;out&#34; }
+            },
+            &#34;interactivity&#34;: { 
+                &#34;events&#34;: { 
+                    &#34;onhover&#34;: { &#34;enable&#34;: true, &#34;mode&#34;: &#34;grab&#34; },
+                    &#34;onclick&#34;: { &#34;enable&#34;: true, &#34;mode&#34;: &#34;push&#34; }
+                },
+                &#34;modes&#34;: {
+                    &#34;grab&#34;: { &#34;distance&#34;: 220, &#34;line_linked&#34;: { &#34;opacity&#34;: 1 } }
+                }
+            },
+            &#34;retina_detect&#34;: true
+        });
+    }
+
+    // --- THEME ENGINE ---
+    function toggleTheme() {
+        const html = document.documentElement;
+        const icon = document.getElementById(&#39;themeIcon&#39;);
+        const text = document.getElementById(&#39;themeText&#39;);
+        const isDark = html.getAttribute(&#39;data-theme&#39;) === &#39;dark&#39;;
+        const newTheme = isDark ? &#39;light&#39; : &#39;dark&#39;;
+        html.setAttribute(&#39;data-theme&#39;, newTheme);
+        icon.className = isDark ? &#39;fas fa-sun&#39; : &#39;fas fa-moon&#39;;
+        text.innerText = isDark ? &#39;LIGHT MODE&#39; : &#39;DARK MODE&#39;;
+        updateParticles(isDark ? &#39;#0066ff&#39; : &#39;#ffffff&#39;);
+    }
+
+    // --- MUSIC ENGINE ---
+    const audio = document.getElementById(&#34;bgAudio&#34;);
+    function togglePlay() {
+        const icon = document.getElementById(&#34;playIcon&#34;);
+        const status = document.getElementById(&#34;musicStatus&#34;);
+        if (audio.paused) {
+            audio.play();
+            icon.className = &#39;fas fa-pause&#39;;
+            status.innerText = &#34;STOP MUSIC&#34;;
+        } else {
+            audio.pause();
+            icon.className = &#39;fas fa-play&#39;;
+            status.innerText = &#34;PLAY MUSIC&#34;;
+        }
+    }
+
+    // --- DATA LOGIC ---
+    async function fetchEmails() {
+        try {
+            const res = await fetch(&#39;data.php&#39;);
+            const data = await res.json();
+            const body = document.getElementById(&#39;emailData&#39;);
+            body.innerHTML = data.map(item =&gt; `
+                &lt;tr class=&#34;animate__animated animate__fadeIn&#34;&gt;
+                    &lt;td class=&#34;align-middle font-weight-bold&#34;&gt;${item.email}&lt;/td&gt;
+                    &lt;td class=&#34;text-center align-middle&#34;&gt;&lt;span class=&#34;badge-limit&#34;&gt;${item.jumlahResult}&lt;/span&gt;&lt;/td&gt;
+                    &lt;td class=&#34;text-center align-middle&#34;&gt;
+                        &lt;button class=&#34;btn btn-link text-danger p-0&#34; onclick=&#34;deleteEmail(&#39;${item.email}&#39;)&#34;&gt;&lt;i class=&#34;fas fa-trash-alt&#34;&gt;&lt;/i&gt;&lt;/button&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;`).join(&#39;&#39;);
+        } catch (e) { console.error(&#34;Fetch error&#34;); }
+    }
+
+    // Handler Ganti Data
+    document.getElementById(&#39;gantiButton&#39;).addEventListener(&#39;click&#39;, async function() {
+        const nick = document.getElementById(&#39;namaResult&#39;).value;
+        const sender = document.getElementById(&#39;panelMurni&#39;).value;
+        await fetch(`ganti.php?nick=${encodeURIComponent(nick)}&amp;sender=${encodeURIComponent(sender)}`);
+        Swal.fire({ 
+            icon: &#39;success&#39;, 
+            title: &#39;DATA UPDATED&#39;, 
+            text: &#39;Data Result Berhasil Diganti✅&#39;, 
+            timer: 1500, 
+            showConfirmButton: false,
+            customClass: { popup: &#39;swal2-popup-custom&#39; }
+        });
+    });
+
+    // Handler Add Email (DENGAN TEKS PERMINTAANMU)
+    document.getElementById(&#39;addEmailButton&#39;).addEventListener(&#39;click&#39;, async function() {
+        const emailInput = document.getElementById(&#39;email&#39;);
+        const limit = document.getElementById(&#39;jumlahResult&#39;).value;
+        if(!emailInput.value) {
+            return Swal.fire({ icon: &#39;error&#39;, title: &#39;Oops...&#39;, text: &#39;Email tidak boleh kosong!&#39; });
+        }
+
+        const fd = new FormData();
+        fd.append(&#39;email&#39;, emailInput.value);
+        fd.append(&#39;jumlahResult&#39;, limit);
+        
+        try {
+            const response = await fetch(&#39;add.php&#39;, { method: &#39;POST&#39;, body: fd });
+            if(response.ok) {
+                fetchEmails();
+                emailInput.value = &#39;&#39;;
+                // NOTIFIKASI SESUAI PERMINTAAN
+                Swal.fire({ 
+                    icon: &#39;success&#39;, 
+                    title: &#39;BERHASIL&#39;, 
+                    text: &#39;Email Berhasil Ditambahkan Ke Daftar Email ✅&#39;, 
+                    timer: 3000, 
+                    showConfirmButton: false,
+                    customClass: { popup: &#39;swal2-popup-custom&#39; },
+                    showClass: { popup: &#39;animate__animated animate__zoomIn&#39; },
+                    hideClass: { popup: &#39;animate__animated animate__zoomOut&#39; }
+                });
+            }
+        } catch (e) {
+            Swal.fire({ icon: &#39;error&#39;, title: &#39;Gagal&#39;, text: &#39;Terjadi kesalahan sistem!&#39; });
+        }
+    });
+
+    function deleteEmail(email) {
+        fetch(&#39;delete.php&#39;, {
+            method: &#39;POST&#39;,
+            headers: { &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39; },
+            body: `email=${encodeURIComponent(email)}`
+        }).then(() =&gt; {
+            fetchEmails();
+            Swal.fire({ 
+                title: &#39;TERHAPUS&#39;, 
+                icon: &#39;success&#39;, 
+                toast: true, 
+                position: &#39;top-end&#39;, 
+                timer: 2000, 
+                showConfirmButton: false 
+            });
+        });
+    }
+
+    window.onload = () =&gt; {
+        updateParticles(&#39;#ffffff&#39;);
+        fetchEmails();
+    };
+    </script>
+  </body>
+</html>
